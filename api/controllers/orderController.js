@@ -53,7 +53,19 @@ const getOrder = async (req, res) => {
 const createOrder = async (req, res) => {
     try {
         const { customer, productDetails } = req.body;
-        const order = await Order.create({ customer, productDetails });
+
+        let totalAmount = 0;
+        for (const item of productDetails) {
+            const product = await Product.findById(item.product);
+            if (!product) {
+                return res.status(404).json({
+                    success: false,
+                    message: 'Product not found'
+                });
+            }
+            totalAmount += product.price * item.quantity;
+        }
+        const order = await Order.create({ customer, productDetails, totalAmount });
         res.status(201).json({
             success: true,
             data: order
