@@ -46,3 +46,23 @@ const getOrder = async (req, res) => {
         });
     }
 };
+
+// @desc    Create new order
+// @route   POST /api/orders
+// @access  Private
+const createOrder = async (req, res) => {
+    try {
+        const { customer, productDetails } = req.body;
+        const order = await Order.create({ customer, productDetails });
+        res.status(201).json({
+            success: true,
+            data: order
+        });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({
+            success: false,
+            message: 'Server Error'
+        });
+    }
+};
