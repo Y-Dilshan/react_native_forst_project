@@ -1,15 +1,15 @@
-const Customer = require('../models/Customer.js');
+const Customer = require('../models/Product.js');
 
-// @desc    Get all customers
-// @route   GET /api/customers
+// @desc    Get all products
+// @route   GET /api/products
 // @access  Public
-const getCustomers = async (req, res) => {
+const getProducts = async (req, res) => {
     try {
-        const customers = await Customer.find();
+        const products = await Customer.find();
         res.status(200).json({
             success: true,
-            count: customers.length,
-            data: customers
+            count: products.length,
+            data: products
         });
     } catch (err) {
         console.error(err);
@@ -20,22 +20,22 @@ const getCustomers = async (req, res) => {
     }
 };
 
-// @desc    Get single customer
-// @route   GET /api/customers/:id
+// @desc    Get single product
+// @route   GET /api/products/:id
 // @access  Public
-const getCustomer = async (req, res) => {
+const getProduct = async (req, res) => {
     try {
-        const customer = await Customer.findById(req.params.id);
-        if(!customer) {
+        const product = await Customer.findById(req.params.id);
+        if(!product) {
             return res.status(404).json({
                 success: false,
-                message: 'Customer not found'
+                message: 'Product not found'
             });
         }
         res.status(200).json({
             success: true,
-            count: customer ? 1 : 0,
-            data: customer
+            count: product ? 1 : 0,
+            data: product
         });
     } catch (err) {
         console.error(err);
@@ -46,10 +46,10 @@ const getCustomer = async (req, res) => {
     }
 };
 
-// @desc    Create new customer
-// @route   POST /api/customers
+// @desc    Create new product
+// @route   POST /api/products
 // @access  Private
-const createCustomer = async (req, res) => {
+const createProduct = async (req, res) => {
     try {
         const customer = await Customer.create(req.body);
         res.status(201).json({
@@ -65,24 +65,24 @@ const createCustomer = async (req, res) => {
     }
 };
 
-// @desc    Update customer
-// @route   PUT /api/customers/:id
+// @desc    Update product
+// @route   PUT /api/products/:id
 // @access  Private
-const updateCustomer = async (req, res) => {
+const updateProduct = async (req, res) => {
     try {
-        const customer = await Customer.findByIdAndUpdate(req.params.id, req.body, {
+        const product = await Customer.findByIdAndUpdate(req.params.id, req.body, {
             new: true,
             runValidators: true
         });
-        if(!customer) {
+        if(!product) {
             return res.status(404).json({
                 success: false,
-                message: 'Customer not found'
+                message: 'Product not found'
             });
         }
         res.status(200).json({
             success: true,
-            data: customer
+            data: product
         });
     } catch (err) {
         console.error(err);
@@ -93,22 +93,22 @@ const updateCustomer = async (req, res) => {
     }
 };
 
-// @desc    Delete customer
-// @route   DELETE /api/customers/:id
+// @desc    Delete product
+// @route   DELETE /api/products/:id
 // @access  Private
-const deleteCustomer = async (req, res) => {
+const deleteProduct = async (req, res) => {
     try {
-        const customer = await Customer.findByIdAndDelete(req.params.id);
-        if(!customer) {
+        const product = await Customer.findByIdAndDelete(req.params.id);
+        if(!product) {
             return res.status(404).json({
                 success: false,
-                message: 'Customer not found'
+                message: 'Product not found'
             });
         }
         res.status(200).json({
             success: true,
             data: {},
-            message: 'Customer deleted successfully'
+            message: 'Product deleted successfully'
         });
     } catch (err) {
         console.error(err);
@@ -120,9 +120,9 @@ const deleteCustomer = async (req, res) => {
 };
 
 module.exports = {
-    getProducts,
-    getProduct,
-    createProduct,
-    updateProduct,
-    deleteProduct
+    getCustomers,
+    getCustomer,
+    createCustomer,
+    updateCustomer,
+    deleteCustomer
 };
