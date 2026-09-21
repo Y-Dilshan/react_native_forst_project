@@ -6,7 +6,7 @@ const Product = require('../models/Product.js');
 // @access  Private
 const getOrders = async (req, res) => {
     try {
-        const orders = await Order.find().populate('customer').populate('productDetails.product');
+        const orders = await Order.find().populate('customer','name','address').populate('productDetails.product');
         res.status(200).json({
             success: true,
             count: orders.length,
