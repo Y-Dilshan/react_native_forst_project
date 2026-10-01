@@ -22,9 +22,17 @@ const signup = async (req, res) => {
         if (existingUser) {
             return res.status(400).json({ message: 'User already exists' });
         }
-
+        //create new user
+        const user = await User.create({ username, email, password });
+        
+        if (user) {
+            const token = generateToken(user._id);
+            return res.status(201).json({ token });
+        }else {
+            return res.status(400).json({ message: 'Invalid user data' });
+        }
     } catch (error) {
         console.error(error);
-        return res.status(500).json({ message: 'Internal server error' });
+        return res.status(500).json({ message: 'Server error' });
     }
 };
