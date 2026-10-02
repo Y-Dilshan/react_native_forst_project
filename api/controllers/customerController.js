@@ -19,3 +19,23 @@ const getCustomers = async (req, res) => {
         });
     }
 };
+
+// @desc    Get single customer
+// @route   GET /api/customers/:id
+// @access  Public
+const getCustomer = async (req, res) => {
+    try {
+        const customer = await Customer.findById(req.params.id);
+        res.status(200).json({
+            success: true,
+            count: customer ? 1 : 0,
+            data: customer
+        });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({
+            success: false,
+            message: 'Server Error'
+        });
+    }
+};
