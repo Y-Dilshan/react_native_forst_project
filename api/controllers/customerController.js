@@ -92,3 +92,36 @@ const updateCustomer = async (req, res) => {
         });
     }
 };
+
+// @desc    Delete customer
+// @route   DELETE /api/customers/:id
+// @access  Private
+const deleteCustomer = async (req, res) => {
+    try {
+        const customer = await Customer.findByIdAndDelete(req.params.id);
+        if(!customer) {
+            return res.status(404).json({
+                success: false,
+                message: 'Customer not found'
+            });
+        }
+        res.status(200).json({
+            success: true,
+            data: {}
+        });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({
+            success: false,
+            message: 'Server Error'
+        });
+    }   
+};
+
+module.exports = {
+    getCustomers,
+    getCustomer,
+    createCustomer,
+    updateCustomer,
+    deleteCustomer
+};
