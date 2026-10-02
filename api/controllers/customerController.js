@@ -26,9 +26,34 @@ const getCustomers = async (req, res) => {
 const getCustomer = async (req, res) => {
     try {
         const customer = await Customer.findById(req.params.id);
+        if(!customer) {
+            return res.status(404).json({
+                success: false,
+                message: 'Customer not found'
+            });
+        }
         res.status(200).json({
             success: true,
             count: customer ? 1 : 0,
+            data: customer
+        });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({
+            success: false,
+            message: 'Server Error'
+        });
+    }
+};
+
+// @desc    Create new customer
+// @route   POST /api/customers
+// @access  Private
+const createCustomer = async (req, res) => {
+    try {
+        const customer = await Customer.create(req.body);
+        res.status(201).json({
+            success: true,
             data: customer
         });
     } catch (err) {
