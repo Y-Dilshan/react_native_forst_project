@@ -15,5 +15,23 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-//Enable CORS
+//Enable CORS (Cross-Origin Resource Sharing)
 app.use(cors());
+
+//Enable Routes
+app.use('/api/v1/auth', require('./routes/authRoutes.js'));
+
+//Root route
+app.get('/', (req, res) => {
+    res.json({ message: 'API is running...' });
+});
+
+app.use((req, res, next) => {
+    res.status(404).json({ message: 'Route not found' });
+});
+
+const PORT = process.env.PORT || 5000;
+
+app.listen(PORT, () => {
+    console.log(`Server is running on port ${PORT}`);
+});
