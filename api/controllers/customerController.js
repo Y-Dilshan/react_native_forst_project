@@ -64,3 +64,31 @@ const createCustomer = async (req, res) => {
         });
     }
 };
+
+// @desc    Update customer
+// @route   PUT /api/customers/:id
+// @access  Private
+const updateCustomer = async (req, res) => {
+    try {
+        const customer = await Customer.findByIdAndUpdate(req.params.id, req.body, {
+            new: true,
+            runValidators: true
+        });
+        if(!customer) {
+            return res.status(404).json({
+                success: false,
+                message: 'Customer not found'
+            });
+        }
+        res.status(200).json({
+            success: true,
+            data: customer
+        });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({
+            success: false,
+            message: 'Server Error'
+        });
+    }
+};
