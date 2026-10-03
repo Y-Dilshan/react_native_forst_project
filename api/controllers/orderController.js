@@ -156,3 +156,29 @@ const updateOrder = async (req, res) => {
         });
     }
 };
+
+// @desc    Delete order
+// @route   DELETE /api/orders/:id
+// @access  Private
+const deleteOrder = async (req, res) => {
+    try {
+        const order = await Order.findById(req.params.id);
+        if (!order) {
+            return res.status(404).json({
+                success: false,
+                message: 'Order not found'
+            });
+        }
+        await order.remove();
+        res.status(200).json({
+            success: true,
+            message: 'Order deleted'
+        });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({
+            success: false,
+            message: 'Server Error'
+        });
+    }
+};
