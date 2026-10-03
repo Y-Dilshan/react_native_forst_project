@@ -114,7 +114,33 @@ const updateOrder = async (req, res) => {
                 message: 'Order not found'
             });
         }
-        const updatedOrder = await Order.findByIdAndUpdate(req.params.id, req.body, {
+
+        if(req.body.productDetails) {
+            for (const item of req.body.productDetails) {
+                const product = await Product.findById(item.product);
+                product.qtyOnHand += item.quantity;
+                await product.save();
+            }
+        let totalAmount = 0;
+        for (const item of req.body.productDetails) {
+            const product = await Product.findById(item.product);
+            if (!product) {
+                return res.status(404).json({
+                    success: false,
+                    message: 'Product not found'
+                });
+            }
+            item.price = product.unitPrice;
+            totalAmount += product.unitPrice * item.quantity;
+
+            // Update the product quantity
+            product.qtyOnHand -= item.quantity;
+            await product.save();
+        }
+
+        req.body.totalAmount = totalAmount;
+        }
+        const updatedOrder = await Order.findByIdAndUpdate(req.params.id, { ...req.body, totalAmount }, {
             new: true,
             runValidators: true
         });
