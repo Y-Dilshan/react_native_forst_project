@@ -92,7 +92,36 @@ const createOrder = async (req, res) => {
             success: true,
             data: populatedOrder
         });
-        
+
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({
+            success: false,
+            message: 'Server Error'
+        });
+    }
+};
+
+// @desc    Update order
+// @route   PUT /api/orders/:id
+// @access  Private
+const updateOrder = async (req, res) => {
+    try {
+        const order = await Order.findById(req.params.id);
+        if (!order) {
+            return res.status(404).json({
+                success: false,
+                message: 'Order not found'
+            });
+        }
+        const updatedOrder = await Order.findByIdAndUpdate(req.params.id, req.body, {
+            new: true,
+            runValidators: true
+        });
+        res.status(200).json({
+            success: true,
+            data: updatedOrder
+        });
     } catch (err) {
         console.error(err);
         res.status(500).json({
