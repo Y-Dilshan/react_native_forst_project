@@ -169,7 +169,16 @@ const deleteOrder = async (req, res) => {
                 message: 'Order not found'
             });
         }
-        await order.remove();
+
+        // Restore the product quantities
+        for (const item of order.productDetails) {
+            const product = await Product.findById(item.product);
+            if (product) {
+                product.qtyOnHand += item.quantity;
+                await product.save();
+            }
+        }
+        await order.findByIdAndDelete(req.params.id);
         res.status(200).json({
             success: true,
             message: 'Order deleted'
@@ -181,4 +190,12 @@ const deleteOrder = async (req, res) => {
             message: 'Server Error'
         });
     }
+};
+
+module.exports = {
+    getOrders,
+    getOrder,
+    createOrder,
+    updateOrder,
+    deleteOrder
 };
