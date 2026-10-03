@@ -1,0 +1,8 @@
+const express = require('express');
+const router = express.Router();
+const { getCustomers, getCustomer, createCustomer, deleteCustomer } = require('../controllers/customerController.js');
+const { protect } = require('../middleware/authMiddleware.js');
+
+// Routes for customers
+router.route('/').get(protect, getCustomers).post(protect, createCustomer);
+router.route('/:id').get(protect, getCustomer).put(protect, updateCustomer).delete(protect, deleteCustomer);
