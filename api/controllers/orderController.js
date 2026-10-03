@@ -55,21 +55,44 @@ const createOrder = async (req, res) => {
         const { customer, productDetails } = req.body;
 
         let totalAmount = 0;
+
         for (const item of productDetails) {
             const product = await Product.findById(item.product);
+
             if (!product) {
                 return res.status(404).json({
                     success: false,
                     message: 'Product not found'
                 });
             }
-            totalAmount += product.price * item.quantity;
+            if (product.qtyOnHand < item.quantity) {
+                return res.status(404).json({
+                    success: false,
+                    message: `Insufficient quantity for product ${product.description}`
+                });
+            }
+            item.price = product.unitPrice;
+            totalAmount += product.unitPrice * item.quantity;
+
+            // Update the product quantity
+            product.qtyOnHand -= item.quantity;
+            await product.save();
         }
         const order = await Order.create({ customer, productDetails, totalAmount });
         res.status(201).json({
             success: true,
             data: order
         });
+
+        const populatedOrder = await Order.findById(order._id)
+        .populate('customer','name','address')
+        .populate('productDetails.product', 'description unitPrice');
+
+        res.status(201).json({
+            success: true,
+            data: populatedOrder
+        });
+        
     } catch (err) {
         console.error(err);
         res.status(500).json({
