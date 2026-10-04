@@ -20,6 +20,9 @@ app.use(cors());
 
 //Enable Routes
 app.use('/api/v1/auth', require('./routes/authRoutes.js'));
+app.use('/api/v1/products', require('./routes/productRoute.js'));
+app.use('/api/v1/customers', require('./routes/customerRoute.js'));
+app.use('/api/v1/orders', require('./routes/orderRoute.js'));
 
 //Root route
 app.get('/', (req, res) => {

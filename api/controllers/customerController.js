@@ -120,9 +120,9 @@ const deleteCustomer = async (req, res) => {
 };
 
 module.exports = {
-    getProducts,
-    getProduct,
-    createProduct,
-    updateProduct,
-    deleteProduct
+    getCustomers,
+    getCustomer,
+    createCustomer,
+    updateCustomer,
+    deleteCustomer
 };
