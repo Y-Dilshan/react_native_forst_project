@@ -43,15 +43,8 @@ export default function Login() {
             router.replace('/(tabs)');
 
         } catch (error) {
-            console.error(
-                'Error during login:',
-                error.response?.data || error.message
-            );
-
-            Alert.alert(
-                'Login Failed',
-                error.response?.data?.message || 'Something went wrong'
-            );
+            console.error('Error during login:', error);
+            Alert.alert('Login Failed', 'Invalid email or password. Please try again.');
         }
     };
 
