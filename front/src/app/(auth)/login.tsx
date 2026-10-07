@@ -6,6 +6,7 @@ import {
     StyleSheet,
     TextInput,
     Button,
+    Text,
     Alert
 } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -72,6 +73,13 @@ export default function Login() {
                 title="Login"
                 onPress={handleLogin}
             />
+
+            <Text style={{ marginTop: 20, textAlign: 'center' }}>
+                Don't have an account?{' '}
+                <Text style={{ color: 'blue' }} onPress={() => router.push('/register')}>
+                    Sign up
+                </Text>
+            </Text>
 
         </View>
     );
