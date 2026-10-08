@@ -1,7 +1,7 @@
 import { useRouter } from 'expo-router';
 import { useState } from 'react';
 import API from '../services/api';
-import { View, StyleSheet, TextInput } from 'react-native';
+import { View, StyleSheet, TextInput, Button, Text } from 'react-native';
 
 export default function Signup() {
     const router = useRouter();
@@ -41,7 +41,12 @@ export default function Signup() {
                 secureTextEntry
                 style = {styles.input}
             />
+
+            <Button title="Sign Up" onPress={handleSignup} />
+            <Text  onPress={() => router.push('/login')}>Already have an account? Log in</Text>
+            <Button title="Go to Login" onPress={() => router.push('/login')} />
         </View>
+    
     )
 }
 
@@ -56,5 +61,9 @@ const styles = StyleSheet.create({
         borderColor: 'gray',
         padding: 10,
         margin: 10,
+    },
+    Text: {
+        marginTop: 20,
+        color: 'red',
     }
 });

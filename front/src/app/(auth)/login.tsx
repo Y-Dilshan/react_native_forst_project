@@ -76,7 +76,7 @@ export default function Login() {
 
             <Text style={{ marginTop: 20, textAlign: 'center' }}>
                 Don't have an account?{' '}
-                <Text style={{ color: 'blue' }} onPress={() => router.push('/register')}>
+                <Text style={{ color: 'blue' }} onPress={() => router.push('/(auth)/signup')}>
                     Sign up
                 </Text>
             </Text>
@@ -99,4 +99,8 @@ const styles = StyleSheet.create({
         margin: 10,
         borderRadius: 5,
     },
+    Text: {
+        marginTop: 20,
+        color: 'red',
+    }
 });
