@@ -12,13 +12,16 @@ export default function TabLayout() {
         tabBarActiveTintColor: '#007AFF',
         tabBarInactiveTintColor: '#888888',
         tabBarStyle: {
-          backgroundColor: colorScheme === 'dark' ? '#121212' : '#FFFFFF',
-          borderTopColor: colorScheme === 'dark' ? '#333333' : '#EEEEEE',
+          backgroundColor:
+            colorScheme === 'dark' ? '#121212' : '#FFFFFF',
+          borderTopColor:
+            colorScheme === 'dark' ? '#333333' : '#EEEEEE',
           height: 60,
           paddingBottom: 5,
         },
       }}
     >
+      {/* Home */}
       <Tabs.Screen
         name="Home"
         options={{
@@ -33,13 +36,14 @@ export default function TabLayout() {
         }}
       />
 
+      {/* Customer */}
       <Tabs.Screen
         name="customer"
         options={{
-          title: 'customer',
+          title: 'Customer',
           tabBarIcon: ({ color, size, focused }) => (
             <Ionicons
-              name={focused ? 'person' : 'person-outline'}
+              name={focused ? 'people' : 'people-outline'}
               size={size}
               color={color}
             />
@@ -47,13 +51,14 @@ export default function TabLayout() {
         }}
       />
 
+      {/* Order */}
       <Tabs.Screen
         name="order"
         options={{
-          title: 'order',
+          title: 'Orders',
           tabBarIcon: ({ color, size, focused }) => (
             <Ionicons
-              name={focused ? 'person' : 'person-outline'}
+              name={focused ? 'receipt' : 'receipt-outline'}
               size={size}
               color={color}
             />
@@ -61,13 +66,14 @@ export default function TabLayout() {
         }}
       />
 
+      {/* Product */}
       <Tabs.Screen
         name="product"
         options={{
-          title: 'product',
+          title: 'Products',
           tabBarIcon: ({ color, size, focused }) => (
             <Ionicons
-              name={focused ? 'person' : 'person-outline'}
+              name={focused ? 'cube' : 'cube-outline'}
               size={size}
               color={color}
             />
